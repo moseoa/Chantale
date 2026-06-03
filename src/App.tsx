@@ -3,6 +3,7 @@ import { Sidebar } from './components/Sidebar'
 import { EventsPage } from './pages/EventsPage'
 import { SocialPage } from './pages/SocialPage'
 import { SharePage } from './pages/SharePage'
+import { HolidaysPage } from './pages/HolidaysPage'
 import { useWorkspace } from './hooks/useWorkspace'
 import { seedIfEmpty } from './seed'
 import { loadWorkspace, saveWorkspace } from './store'
@@ -35,10 +36,12 @@ function App() {
       <main className="flex min-w-0 flex-1 flex-col">
         {page === 'events' && <EventsPage data={data} onUpdate={persist} />}
         {page === 'social' && <SocialPage data={data} onUpdate={persist} />}
+        {page === 'holidays' && <HolidaysPage />}
         {page === 'share' && (
           <SharePage
             workspaceId={workspaceId}
             data={data}
+            onUpdate={persist}
             onImport={(d) => persist(d)}
             onSwitchWorkspace={switchWorkspace}
           />

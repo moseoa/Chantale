@@ -12,6 +12,7 @@ import { PillSelect } from '../components/PillSelect'
 import { AssigneeInput } from '../components/AssigneeInput'
 import { CalendarView } from '../components/CalendarView'
 import { Modal } from '../components/Modal'
+import { addTeamMember, removeTeamMember } from '../team'
 
 interface EventsPageProps {
   data: WorkspaceData
@@ -51,13 +52,19 @@ export function EventsPage({ data, onUpdate }: EventsPageProps) {
     setSelected(new Set())
   }
 
-  const addTeamMember = (name: string) => {
-    onUpdate((prev) => ({
-      ...prev,
-      teamMembers: prev.teamMembers.includes(name)
-        ? prev.teamMembers
-        : [...prev.teamMembers, name],
-    }))
+  const handleAddTeamMember = (name: string) => {
+    onUpdate((prev) => addTeamMember(prev, name))
+  }
+
+  const handleRemoveTeamMember = (name: string) => {
+    const usedIn =
+      data.events.some((e) => e.assignees.includes(name)) ||
+      data.socialPosts.some((p) => p.assignees.includes(name))
+    const msg = usedIn
+      ? `Remove "${name}" from the team list and from all assignees?`
+      : `Remove "${name}" from the team list?`
+    if (!confirm(msg)) return
+    onUpdate((prev) => removeTeamMember(prev, name))
   }
 
   return (
@@ -197,7 +204,8 @@ export function EventsPage({ data, onUpdate }: EventsPageProps) {
                         assignees={event.assignees}
                         teamMembers={data.teamMembers}
                         onChange={(assignees) => updateEvent(event.id, { assignees })}
-                        onAddTeamMember={addTeamMember}
+                        onAddTeamMember={handleAddTeamMember}
+                        onRemoveTeamMember={handleRemoveTeamMember}
                       />
                     </td>
                     <td className="px-4 py-3">

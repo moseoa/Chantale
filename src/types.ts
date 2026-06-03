@@ -32,4 +32,4 @@ export interface WorkspaceData {
 }
 
 export type ViewMode = 'table' | 'calendar'
-export type Page = 'events' | 'social' | 'share'
+export type Page = 'events' | 'social' | 'holidays' | 'share'

@@ -3,6 +3,7 @@ import {
   Share2,
   LayoutGrid,
   Link2,
+  Flag,
 } from 'lucide-react'
 import type { Page } from '../types'
 
@@ -14,6 +15,7 @@ interface SidebarProps {
 const navItems: { id: Page; label: string; icon: typeof Calendar }[] = [
   { id: 'events', label: 'Events', icon: Calendar },
   { id: 'social', label: 'Social media', icon: Share2 },
+  { id: 'holidays', label: 'Canadian holidays', icon: Flag },
   { id: 'share', label: 'Share & sync', icon: Link2 },
 ]
 

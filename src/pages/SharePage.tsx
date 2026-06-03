@@ -8,11 +8,13 @@ import {
   generateWorkspaceId,
   saveWorkspace,
 } from '../store'
+import { TeamMembersPanel } from '../components/TeamMembersPanel'
 
 interface SharePageProps {
   workspaceId: string
   data: WorkspaceData
   onImport: (data: WorkspaceData) => void
+  onUpdate: (data: WorkspaceData) => void
   onSwitchWorkspace: (id: string) => void
 }
 
@@ -20,6 +22,7 @@ export function SharePage({
   workspaceId,
   data,
   onImport,
+  onUpdate,
   onSwitchWorkspace,
 }: SharePageProps) {
   const [copied, setCopied] = useState(false)
@@ -104,6 +107,8 @@ export function SharePage({
             </button>
           </div>
         </section>
+
+        <TeamMembersPanel data={data} onUpdate={onUpdate} />
 
         <section className="rounded-xl border border-gray-200 bg-white p-5">
           <h2 className="font-semibold text-gray-900">Backup & restore</h2>
